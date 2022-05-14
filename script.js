@@ -1,14 +1,14 @@
 // TO ATTACH AN EVENT LISTENER WITH PLAIN, OL' JAVASCRIPT:
+
+// When User Clicks Start Button: 
 var startButtonEl = document.querySelector("#quiz-start");
 startButtonEl.addEventListener("click", function() {
     // Timer Elements
 var timerEl = document.getElementById('countdown');
-var mainEl = document.getElementById('main');
 
-// Timer that counts down from 100
+// Starts a Timer that counts down from 30
+var timeLeft = 30;
 function countdown() {
-    var timeLeft = 99;
-  
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
       // As long as the `timeLeft` is greater than 1
@@ -22,12 +22,38 @@ function countdown() {
         timerEl.textContent = '' + "Time's Up!";
         // Use `clearInterval()` to stop the timer
         clearInterval(timeInterval);
-        // Call the `displayMessage()` function
-        displayMessage();
+        // Call the `endQuiz()` function
+        endQuiz();
       }
     }, 1000);
-  }
-  countdown();
+}
+countdown();
+
+    // End Quiz when time runs out
+    function endQuiz () {
+        var newQuestionEl = document.querySelector("#quiz-question")
+        newQuestionEl.textContent = "All Done!"
+        // remove other text boxes
+        //findCorrectElToRemove.remove();  ***  THESE ARENT THE CORRECT ELEMENTS TO REMOVE!  
+        newAnswerAEl.remove();
+        newAnswerBEl.remove();
+        newAnswerCEl.remove();
+        newAnswerDEl.remove();
+        // Final Score is 
+        // Enter initials , input area, submit button
+    }
+    
+    // To decrease time by 10 seconds with a wrong answer 
+    function subtractTen() {
+        timeLeft= (timeLeft- 10);
+    }
+
+    // To stop the clock when user reaches the end of the questions. 
+    function stopClock() {
+        timeLeft = 0;
+    }
+ 
+    // ** Start of quiz ** 
     // find quiz intro
     var quizQuestionsEl = document.querySelector(".quiz-topper");
     var quizIntroEl = document.querySelector(".intro")
@@ -82,8 +108,6 @@ function countdown() {
     quizAnswerDEl.appendChild(newAnswerDEl);
 
 
-
-    
     //String values must be enclosed within _ when assigning to variables.
     // 1. commas 2. curly brackets 3. quotes 4. parentheses
     // A very useful tool during development and debugging for printed content to the debugger is:   
@@ -148,6 +172,7 @@ function countdown() {
 
     if (correctAnswer1DEl.addEventListener("click", function() {
         console.log("Wrong!");
+        subtractTen();
         newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
         newQuestionEl.setAttribute("id", "quiz-question");
         newAnswerListEl.setAttribute("class", "quiz-answer-option")
@@ -229,7 +254,7 @@ function countdown() {
         newAnswerDEl.setAttribute("class", "quiz-answer-option");
         newAnswerDEl.innerHTML = "<button id='answer-four'>4. New Question</button>"
          
-        }));
+    }));
     
     var correctAnswer1CEl = document.querySelector("#answer-three")
 
@@ -247,7 +272,7 @@ function countdown() {
     newAnswerDEl.setAttribute("class", "quiz-answer-option");
     newAnswerDEl.innerHTML = "<button id='answer-four'>4. New Question</button>"
          
-        }));
+    }));
     
         var correctAnswer1DEl = document.querySelector("#answer-four")
 
@@ -265,4 +290,8 @@ function countdown() {
         newAnswerDEl.innerHTML = "<button id='answer-four'>4. New Question</button>"
          
     }));
+    
+
 });
+
+
