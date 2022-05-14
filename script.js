@@ -8,6 +8,7 @@ var timerEl = document.getElementById('countdown');
 
 // Starts a Timer that counts down from 30
 var timeLeft = 30;
+var savedTime = [];
 
 // var timer = null;
 
@@ -54,11 +55,12 @@ countdown();
 
     // To stop the clock when user reaches the end of the questions. 
     function stopClock() {
-            var saveTime = timeLeft; //save this time to storage
+            var saveTime = timeLeft; 
+            savedTime.push(saveTime);//save this time to storage
             timeLeft = 0;
             console.log(saveTime);
         }
-
+        console.log(savedTime);
  
     // ** Start of quiz ** 
     // find quiz intro
@@ -299,7 +301,7 @@ countdown();
          
     }));
     
-    console.log(saveTime);
+    console.log(savedTime);
 
 });
 
