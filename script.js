@@ -8,6 +8,10 @@ var timerEl = document.getElementById('countdown');
 
 // Starts a Timer that counts down from 30
 var timeLeft = 30;
+
+// var timer = null;
+
+
 function countdown() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
@@ -50,8 +54,11 @@ countdown();
 
     // To stop the clock when user reaches the end of the questions. 
     function stopClock() {
-        timeLeft = 0;
-    }
+            var saveTime = timeLeft; //save this time to storage
+            timeLeft = 0;
+            console.log(saveTime);
+        }
+
  
     // ** Start of quiz ** 
     // find quiz intro
@@ -154,6 +161,7 @@ countdown();
 
     if (correctAnswer1CEl.addEventListener("click", function() {
         console.log("Correct!");
+        stopClock();
 
     newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
     newQuestionEl.setAttribute("id", "quiz-question");
@@ -166,9 +174,9 @@ countdown();
     newAnswerDEl.setAttribute("class", "quiz-answer-option");
     newAnswerDEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
          
-        }));
+    }));
     
-        var correctAnswer1DEl = document.querySelector("#answer-four")
+    var correctAnswer1DEl = document.querySelector("#answer-four")
 
     if (correctAnswer1DEl.addEventListener("click", function() {
         console.log("Wrong!");
@@ -291,6 +299,7 @@ countdown();
          
     }));
     
+    console.log(saveTime);
 
 });
 
