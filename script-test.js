@@ -1,44 +1,68 @@
-// Timer Elements
-var timerEl = document.getElementById('countdown');
-var mainEl = document.getElementById('main');
-
-// Timer that counts down from 100
-function countdown() {
-    var timeLeft = 100;
-  
-    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function () {
-      // As long as the `timeLeft` is greater than 1
-      if (timeLeft > 1) {
-        // Set the `textContent` of `timerEl` to show the remaining seconds
-        timerEl.textContent = "Time: " + timeLeft;
-        // Decrement `timeLeft` by 1
-        timeLeft--;
-      } else {
-        // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-        timerEl.textContent = '' + "Time's Up!";
-        // Use `clearInterval()` to stop the timer
-        clearInterval(timeInterval);
-        // Call the `displayMessage()` function
-        displayMessage();
-      }
-    }, 1000);
-  }
-
-  countdown();
-
-
-
-
-
-
-
-
-
 // TO ATTACH AN EVENT LISTENER WITH PLAIN, OL' JAVASCRIPT:
-// ***  FIRST QUIZ QUESTION ***
+
+// When User Clicks Start Button: 
 var startButtonEl = document.querySelector("#quiz-start");
 startButtonEl.addEventListener("click", function() {
+    // Timer Elements
+var timerEl = document.getElementById('countdown');
+
+// Starts a Timer that counts down from 30
+var timeLeft = 30;
+var savedTime = [];
+
+// var timer = null;
+
+
+// function countdown() {
+//     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+//     var timeInterval = setInterval(function () {
+//       // As long as the `timeLeft` is greater than 1
+//       if (timeLeft > 1) {
+//         // Set the `textContent` of `timerEl` to show the remaining seconds
+//         timerEl.textContent = "Time: " + timeLeft;
+//         // Decrement `timeLeft` by 1
+//         timeLeft--;
+//       } else {
+//         // Once `timeLeft` gets to 0, set `timerEl` to an empty string
+//         timerEl.textContent = '' + "Time's Up!";
+//         // Use `clearInterval()` to stop the timer
+//         clearInterval(timeInterval);
+//         // Call the `endQuiz()` function
+//         endQuiz();
+//       }
+//     }, 1000);
+// }
+// countdown();
+
+    // End Quiz when time runs out
+    function endQuiz () {
+        var newQuestionEl = document.querySelector("#quiz-question")
+        newQuestionEl.textContent = "All Done!"
+        // remove other text boxes
+        //findCorrectElToRemove.remove();  ***  THESE ARENT THE CORRECT ELEMENTS TO REMOVE!  
+        newAnswerAEl.remove();
+        newAnswerBEl.remove();
+        newAnswerCEl.remove();
+        newAnswerDEl.remove();
+        // Final Score is 
+        // Enter initials , input area, submit button
+    }
+    
+    // To decrease time by 10 seconds with a wrong answer 
+    function subtractTen() {
+        timeLeft= (timeLeft- 10);
+    }
+
+    // To stop the clock when user reaches the end of the questions. 
+    function stopClock() {
+            var saveTime = timeLeft; 
+            savedTime.push(saveTime);//save this time to storage
+            timeLeft = 0;
+            console.log(saveTime);
+        }
+        console.log(savedTime);
+ 
+// ** Start of quiz ** 
     // find quiz intro
     var quizQuestionsEl = document.querySelector(".quiz-topper");
     var quizIntroEl = document.querySelector(".intro")
@@ -59,143 +83,139 @@ startButtonEl.addEventListener("click", function() {
     // Remove Start Button
     startButtonEl.remove();
 
-// Target quiz area. Add an ordered list element, then a list element with a button inside.
-    var quizAnswerAEl = document.querySelector("#quiz-answer-wrapper");
-    var newAnswerAEl = document.createElement("ol");
-    newAnswerAEl.setAttribute("id", "quiz-answers");
-    newAnswerAEl.setAttribute("class", "quiz-answers");
-    var newAnswerListEl = document.createElement("li");
-    newAnswerListEl.setAttribute("class", "quiz-answer-option")
-    newAnswerListEl.innerHTML = "<button id='answer-one'>1. Strings</button>"
+// Target quiz area. Add an ordered list.
+    var quizAnswers1El = document.querySelector("#quiz-answer-wrapper");
+    var newQuestionEl = document.createElement("ol");
+    newQuestionEl.setAttribute("id", "quiz-answers");
+    newQuestionEl.setAttribute("class", "quiz-answers");
+    quizAnswers1El.appendChild(newQuestionEl);
+
+// Add List Element to Ordered List, with buttons inside each list element
+    var newAnswerEl = document.createElement("li");
+    newAnswerEl.setAttribute("class", "quiz-answer-option")
+    newAnswerEl.innerHTML = "<button id='answer-one-a answer'>1. Strings</button>"
     // Append new ordered list (#quiz-answers) and list with button (.quiz-answer-option) to the div
-    quizAnswerAEl.appendChild(newAnswerAEl);
-    newAnswerAEl.appendChild(newAnswerListEl);
-
-    var quizAnswerBEl = document.querySelector("#quiz-answers");
-    var newAnswerBEl = document.createElement("li");
-    newAnswerBEl.setAttribute("class", "quiz-answer-option");
-    newAnswerBEl.innerHTML = "<button id='answer-two'>2. Booleans</button>"
+    newQuestionEl.appendChild(newAnswerEl);
+        //Second Answer
+    var quizAnswer1BEl = document.querySelector("#quiz-answers");
+    var newAnswer1BEl = document.createElement("li");
+    newAnswer1BEl.setAttribute("class", "quiz-answer-option");
+    newAnswer1BEl.innerHTML = "<button id='answer-one-b answer'>2. Booleans</button>"
     // Append new list and button to the ordered list (#quiz-answers)
-    quizAnswerBEl.appendChild(newAnswerBEl);
-
-    var quizAnswerCEl = document.querySelector("#quiz-answers");
-    var newAnswerCEl = document.createElement("li");
-    newAnswerCEl.setAttribute("class", "quiz-answer-option");
-    newAnswerCEl.innerHTML = "<button id='answer-three'>3. Alerts</button>"
+    quizAnswer1BEl.appendChild(newAnswer1BEl);
+        //Third Answer
+    var quizAnswer1CEl = document.querySelector("#quiz-answers");
+    var newAnswer1CEl = document.createElement("li");
+    newAnswer1CEl.setAttribute("class", "quiz-answer-option");
+    newAnswer1CEl.innerHTML = "<button id='answer-one-c answer'>3. Alerts</button>"
     // Append new list and button to the ordered list (#quiz-answers)
-    quizAnswerCEl.appendChild(newAnswerCEl);
-
-    var quizAnswerDEl = document.querySelector("#quiz-answers");
-    var newAnswerDEl = document.createElement("li");
-    newAnswerDEl.setAttribute("class", "quiz-answer-option");
-    newAnswerDEl.innerHTML = "<button id='answer-four'>4. Numbers</button>"
+    quizAnswer1CEl.appendChild(newAnswer1CEl);
+        //Fourth Answer
+    var quizAnswer1DEl = document.querySelector("#quiz-answers");
+    var newAnswer1DEl = document.createElement("li");
+    newAnswer1DEl.setAttribute("class", "quiz-answer-option");
+    newAnswer1DEl.innerHTML = "<button id='answer-one-d answer'>4. Numbers</button>"
     // Append new list and button to the ordered list (#quiz-answers)
-    quizAnswerDEl.appendChild(newAnswerDEl);
+    quizAnswer1DEl.appendChild(newAnswer1DEl);
 
 
-    // ***** SECOND QUIZ QUESTION ***********
-    // Second quiz question Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
-    
-    
-    var correctAnswer1AEl = document.querySelector("#answer-one")
+        // Put listener on Answer Buttons and replace with new question and answer options
+    var correctAnswer1AEl = document.querySelector("#answer");
+    // var correctAnswer1BEl = document.querySelector("#answer-one-b");
+    // var correctAnswer1CEl = document.querySelector("#answer-one-c");
+    // var correctAnswer1DEl = document.querySelector("#answer-one-d");
 
     if (correctAnswer1AEl.addEventListener("click", function() {
     console.log("Wrong!");
-    newQuestionTwoEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
-    newQuestionTwoEl.setAttribute("id", "quiz-question");
-    newAnswerTwoListEl.setAttribute("class", "quiz-answer-option")
-    newAnswerTwoListEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
-    newAnswerTwoBEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoBEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
-    newAnswerTwoCEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoCEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
-    newAnswerTwoDEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoDEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
-     
+    newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
+    newQuestionEl.setAttribute("id", "quiz-question");
+    newQuestionEl.setAttribute("class", "quiz-answer-option")
+    newQuestionEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
+    // newAnswer1BEl.setAttribute("class", "quiz-answer-option");
+    // newAnswer1BEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
+    // newAnswer1CEl.setAttribute("class", "quiz-answer-option");
+    // newAnswer1CEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
+    // newAnswer1DEl.setAttribute("class", "quiz-answer-option");
+    // newAnswer1DEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
     }));
+//     if (correctAnswer1BEl.addEventListener("click", function() {
+//         console.log("Wrong!");
+//         newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
+//         newQuestionEl.setAttribute("id", "quiz-question");
+//         newQuestionEl.setAttribute("class", "quiz-answer-option")
+//         newQuestionEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
+//         newAnswer1BEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1BEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
+//         newAnswer1CEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1CEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
+//         newAnswer1DEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1DEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
+//         }));
+//     if (correctAnswer1CEl.addEventListener("click", function() {
+//         console.log("Correct!");
+//         newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
+//         newQuestionEl.setAttribute("id", "quiz-question");
+//         newQuestionEl.setAttribute("class", "quiz-answer-option")
+//         newQuestionEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
+//         newAnswer1BEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1BEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
+//         newAnswer1CEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1CEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
+//         newAnswer1DEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1DEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
+//         }));
+//     if (correctAnswer1DEl.addEventListener("click", function() {
+//         console.log("Wrong!");
+//         newQuestionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
+//         newQuestionEl.setAttribute("id", "quiz-question");
+//         newQuestionEl.setAttribute("class", "quiz-answer-option")
+//         newQuestionEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
+//         newAnswer1BEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1BEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
+//         newAnswer1CEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1CEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
+//         newAnswer1DEl.setAttribute("class", "quiz-answer-option");
+//         newAnswer1DEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
+//         }));
+
+// //     // Boolean, but not true or false based on click. 
+
+//         //Illuminate "Wrong"
+//         // Replace quiz question and answers with new ones. 
+//           // Subtract 10 seconds from timer
+//     var correctAnswer1AEl = document.querySelector("#answer-one")
+//           // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
+//     correctAnswer1AEl.addEventListener("click", function() {
+//         console.log("Answer A was Clicked!");
+//           console.log(correctAnswer1AEl)
+//       })
+
     
-    var correctAnswer1BEl = document.querySelector("#answer-two")
-
-    if (correctAnswer1BEl.addEventListener("click", function() {
-        console.log("Wrong!");
-        newQuestionTwoEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
-        newQuestionTwoEl.setAttribute("id", "quiz-question");
-        newAnswerTwoListEl.setAttribute("class", "quiz-answer-option")
-        newAnswerTwoListEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
-        newAnswerTwoBEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoBEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
-        newAnswerTwoCEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoCEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
-        newAnswerTwoDEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoDEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
-         
-        }));
-    
-    var correctAnswer1CEl = document.querySelector("#answer-three")
-
-    if (correctAnswer1CEl.addEventListener("click", function() {
-        console.log("Correct!");
-
-    newQuestionTwoEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
-    newQuestionTwoEl.setAttribute("id", "quiz-question");
-    newAnswerTwoListEl.setAttribute("class", "quiz-answer-option")
-    newAnswerTwoListEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
-    newAnswerTwoBEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoBEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
-    newAnswerTwoCEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoCEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
-    newAnswerTwoDEl.setAttribute("class", "quiz-answer-option");
-    newAnswerTwoDEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
-         
-        }));
-    
-        var correctAnswer1DEl = document.querySelector("#answer-four")
-
-    if (correctAnswer1DEl.addEventListener("click", function() {
-        console.log("Wrong!");
-        newQuestionTwoEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
-        newQuestionTwoEl.setAttribute("id", "quiz-question");
-        newAnswerTwoListEl.setAttribute("class", "quiz-answer-option")
-        newAnswerTwoListEl.innerHTML = "<button id='answer-one'>1. Quotes</button>"
-        newAnswerTwoBEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoBEl.innerHTML = "<button id='answer-two'>2. Curly Brackets</button>"
-        newAnswerTwoCEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoCEl.innerHTML = "<button id='answer-three'>3. Square Brackets</button>"
-        newAnswerTwoDEl.setAttribute("class", "quiz-answer-option");
-        newAnswerTwoDEl.innerHTML = "<button id='answer-four'>4. Parentheses</button>"
-         
-    }));
-    // Boolean, but not true or false based on click. 
-
-        //Illuminate "Wrong"
-        // Replace quiz question and answers with new ones. 
-          // Subtract 10 seconds from timer
-    
-    var correctAnswer1BEl = document.querySelector("#answer-two")
-    // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
-    correctAnswer1BEl.addEventListener("click", function() {
-        console.log("Answer B was Clicked!");
-        console.log(correctAnswer1AEl)
-    })      //Illuminate "Wrong"
-    // Replace quiz question and answers with new ones. 
-    // Subtract 10 seconds from timer
+//     var correctAnswer1BEl = document.querySelector("#answer-two")
+//     // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
+//     correctAnswer1BEl.addEventListener("click", function() {
+//         console.log("Answer B was Clicked!");
+//         console.log(correctAnswer1BEl)
+//     })      //Illuminate "Wrong"
+//     // Replace quiz question and answers with new ones. 
+//     // Subtract 10 seconds from timer
 
 
-    var correctAnswer1CEl = document.querySelector("#answer-three")
-// Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
-    correctAnswer1CEl.addEventListener("click", function() {
-    console.log("Answer C was Clicked!");
-    })      //Illuminate "Correct"
-    // Replace quiz question and answers with new ones. 
+//     var correctAnswer1CEl = document.querySelector("#answer-three")
+// // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
+//     correctAnswer1CEl.addEventListener("click", function() {
+//     console.log("Answer C was Clicked!");
+//     })      //Illuminate "Correct"
+//     // Replace quiz question and answers with new ones. 
 
 
 
-    var correctAnswer1DEl = document.querySelector("#answer-four")
-    // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
-    correctAnswer1DEl.addEventListener("click", function() {
-        console.log("Answer D was Clicked!");
+//     var correctAnswer1DEl = document.querySelector("#answer-four")
+//     // Event listener for question 2 - when they click anywhere in <ol id=quiz-answers>  
+//     correctAnswer1DEl.addEventListener("click", function() {
+//         console.log("Answer D was Clicked!");
 
-    })       //Illuminate "Wrong"
+//     })       //Illuminate "Wrong"
     // Replace quiz question and answers with new ones. 
     // Subtract 10 seconds from timer
 
@@ -419,3 +439,5 @@ startButtonEl.addEventListener("click", function() {
          
 //     }));
 });
+
+
