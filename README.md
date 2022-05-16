@@ -12,6 +12,6 @@ This project's goal was to create a multiple-choice quiz using javascript, speci
 
 This project helped introduce me to javascript event selectors, creating dynamic elements with new attributes, storing and retrieving items from local storage, and continuing with html structuring and css styling.  I did not finish as much as I wanted, having a little bit of trouble with the event selectors on dynamically created elements.  I hope to further my understanding of these items in the future. 
 
-The link to the deployed project is here: https://samantha-ruth.github.io/Horiseon-Refactoring-Project/
+The link to the deployed project is here: https://samantha-ruth.github.io/Code-Quiz/
 
 The url of the Git repository is here: https://github.com/Samantha-Ruth/Horiseon-Refactoring-Project
