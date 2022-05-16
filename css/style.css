@@ -65,7 +65,8 @@ body {
     text-align: center;
     font-size: 30px;
     font-weight: bold;
-    padding: 3vw;
+    padding-top: 3vw;
+    padding-bottom: 3vw;
   }
 
   p {
@@ -85,7 +86,6 @@ body {
 
   .quiz-answer-wrapper {
     display: table; /* adjust to table for quiz questions */
-    padding: 0vw 10vw;
     justify-content: center;
     width: 100%;
     /* border: 3px solid green; */
@@ -136,7 +136,6 @@ body {
   
   .spacer {
     justify-content: left;
-    padding-left: 10vw;
   }
 
   .qualifier {
