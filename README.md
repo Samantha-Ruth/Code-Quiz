@@ -14,4 +14,4 @@ This project helped introduce me to javascript event selectors, creating dynamic
 
 The link to the deployed project is here: https://samantha-ruth.github.io/Code-Quiz/
 
-The url of the Git repository is here: https://github.com/Samantha-Ruth/Horiseon-Refactoring-Project
+The url of the Git repository is here: https://github.com/Samantha-Ruth/Code-Quiz
