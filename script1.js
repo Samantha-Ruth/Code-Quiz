@@ -9,7 +9,42 @@ var quizIntroEl = document.querySelector(".intro")
 var startingParagraphEl = document.querySelector(".quiz-body");
 var newQuestionEl = document.querySelector("#quiz-question");
 
-// Countdown Counter
+var listOfQuestions = [];
+listOfQuestions[0]="Commonly used datatypes do NOT include:";
+listOfQuestions[1]= "The condition in an 'if/then' statement is enclosed with:";
+listOfQuestions[2]= "Arrays in javascript can be used to store ____.";
+listOfQuestions[3]= "String values must be enclosed within _ when assigning to variables.";
+listOfQuestions[4]= "A very useful tool during development and debugging for printed content to the debugger is:";
+
+var listOfAnswers1 = ["The condition in an 'if/then' statement is enclosed with:"];
+listOfAnswers1[0] = "1. Strings";
+listOfAnswers1[1] = "1. Quotes";
+listOfAnswers1[2] = "1. Numbers and strings";
+listOfAnswers1[3] = "1. Commas";
+listOfAnswers1[4] = "1. Javascript";
+
+var listOfAnswers2 = [];
+listOfAnswers2[0] = "2. Booleans";
+listOfAnswers2[1] = "2. Curly Brackets";
+listOfAnswers2[2] = "2. Other arrays";
+listOfAnswers2[3] = "2. Curly brackets";
+listOfAnswers2[4] = "2. Terminal/bash";
+
+var listOfAnswers3 = [];
+listOfAnswers3[0] = "3. Alerts";
+listOfAnswers3[1] = "3. Square Brackets";
+listOfAnswers3[2] = "3. Booleans";
+listOfAnswers3[3] = "3. Quotes";
+listOfAnswers3[4] = "3. 'For' loops";
+
+var listOfAnswers4 = [];
+listOfAnswers4[0] = "4. Numbers";
+listOfAnswers4[1] = "4. Parentheses";
+listOfAnswers4[2] = "4. All of the above";
+listOfAnswers4[3] = "4. Parentheses";
+listOfAnswers4[4] = "4. Console.log";
+
+
 var countdown = function () {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
@@ -31,83 +66,55 @@ var countdown = function () {
     startQuiz();
 }
 
-// When button is clicked, first question renders
 var startQuiz = function () {
-
-    // create new Question
-    var newQuestionEl = document.createElement("h1");
-    newQuestionEl.textContent = ("Commonly used datatypes do NOT include:");
-    newQuestionEl.setAttribute("id", "quiz-question");
-    quizQuestionsEl.appendChild(newQuestionEl);
-    // remove old header/intro
+    // remove old header/intro, paragraph, and start button.
     quizIntroEl.remove();
     startingParagraphEl.remove();
     startButtonEl.remove();
 
-    // create new unordered list with new answers
-    var quizAnswers1El = document.querySelector('#quiz-answer-wrapper');
-    var newAnswerArena = document.createElement("ul");
-    // new answer arena doesn't have any id/class
-    var newAnswer1AEl = document.createElement("li");
-    newAnswer1AEl.setAttribute("class", "quiz-answer-option")
-    newAnswer1AEl.innerHTML = "<button id='answer-one-a'>1. Strings</button>"
-    quizAnswers1El.appendChild(newAnswerArena);
-    newAnswerArena.appendChild(newAnswer1AEl);
+    // create new Question
+    var newQuestionEl = document.createElement("h1");
+    newQuestionEl.setAttribute("id", "quiz-question"); 
+    // newQuestionEl.textContent = "";
+    for (var i = 0; i < listOfQuestions.length; i++) {
+        newQuestionEl.textContent = listOfQuestions[i];
+    }
+    quizQuestionsEl.appendChild(newQuestionEl);
 
-    var newAnswer1BEl = document.createElement("li");
-    newAnswer1BEl.setAttribute("class", "quiz-answer-option")
-    newAnswer1BEl.innerHTML = "<button id='answer-one-b'>2. Booleans</button>"
-    newAnswerArena.appendChild(newAnswer1BEl);
+    // create new answer 1
+    var newAnswer1El = document.createElement("li");
+    newAnswer1El.setAttribute("class", "quiz-answer-option")
+    newAnswer1AEl.innerHTML = "<button id='answer-one-a answer'>"
+    for (var i = 0; i < listOfAnswers1.length; i++) {
+        newAnswer1El.textContent = listOfAnswers1[i];
+    }
+    // newAnswer1AEl.textContent = "";
+    newQuestionEl.appendChild(newAnswer1El);
 
-    var newAnswer1CEl = document.createElement("li");
-    newAnswer1CEl.setAttribute("class", "quiz-answer-option")
-    newAnswer1CEl.innerHTML = "<button id='answer-one-c'>3. Alerts</button>"
-    newAnswerArena.appendChild(newAnswer1CEl);
+    var newAnswer2El = document.createElement("li");
+    newAnswer2El.setAttribute("class", "quiz-answer-option")
+    newAnswer2El.innerHTML = "<button id='answer-one-a answer'>"
+    // newAnswer2El.textContent = "";
+    newAnswer1El.appendChild(newAnswer2El);
 
-    var newAnswer1DEl = document.createElement("li");
-    newAnswer1DEl.setAttribute("class", "quiz-answer-option");
-    newAnswer1DEl.innerHTML = "<button id='answer-one-d'>4. Numbers</button>";
-    newAnswerArena.appendChild(newAnswer1DEl);
+    var newAnswer3El = document.createElement("li");
+    newAnswer3El.setAttribute("class", "quiz-answer-option")
+    newAnswer3El.innerHTML = "<button id='answer-one-a answer'>"
+    // newAnswer3El.textContent = "";
+    newAnswer2El.appendChild(newAnswer3El);
 
-    newAnswerArena.addEventListener("click", questionTwo);
+    var newAnswer4El = document.createElement("li");
+    newAnswer4El.setAttribute("class", "quiz-answer-option")
+    newAnswer4El.innerHTML = "<button id='answer-one-a answer'>"
+    // newAnswer4El.textContent = "";
+    newAnswer3El.appendChild(newAnswer4El);
 }
 
-var questionTwo = function () {
-    // newQuestionEl.textContent = ("The condition in an 'if/then' statement is enclosed with:")
-    // newQuestionEl.remove();
-    var question2El = document.createElement("h1");
-    question2El.setAttribute("id", "quiz-question"); 
-    question2El.textContent = ("The condition in an 'if/then' statement is enclosed with:");
-   
-    quizQuestionsEl.appendChild(question2El);
-    // newQuestionEl.innerHTML = "<h1 id='quiz-topper'>The condition in an 'if/then' statement is enclosed with: </h1>";
-    newAnswer1AButtonEl.textContent = ("1. Quotes");
-    newAnswer1BButtonEl.textContent = ("2. Curly Brackets");
-    newAnswer1CButtonEl.textContent = ("3. Square Brackets");
-    newAnswer1DEl.textContent = ("4. Parentheses");
-
-    newAnswerArena.addEventListener("click", questionThree);
-}
-
-var questionThree = function () {
-    // newQuestionEl.remove();
-    var question2El = document.createElement("h1");
-    question2El.setAttribute("id", "quiz-question"); 
-    question2El.textContent = ("The condition in an 'if/then' statement is enclosed with:");
-    quizQuestionsEl.appendChild(question2El);
-    // newQuestionEl.innerHTML = "<h1 id='quiz-topper'>The condition in an 'if/then' statement is enclosed with: </h1>";
-    newAnswer1AButtonEl.textContent = ("1. Numbers and strings");
-    newAnswer1BButtonEl.textContent = ("2. Other arrays");
-    newAnswer1CButtonEl.textContent = ("3. Booleans");
-    newAnswer1DEl.textContent = ("4. All of the above");
-}
 
 
 //End Quiz when time runs out
-// ******** NOT WORKING ********
 var endQuiz = function () {
     // Enter High Scores
-    var newQuestionEl = document.querySelector("#quiz-question")
     newQuestionEl.textContent = "All Done!"
     var highScoresForm = createElement("form");
     highScoresForm.innerHTML = "<label for='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
