@@ -14,13 +14,10 @@ var startingParagraphEl = document.querySelector(".quiz-body");
 
 // CREATES DIV TO WRAP ANSWERS
 var quizAnswerWrapperEl = document.createElement("div");
-// quizAnswerWrapperEl.setAttribute("id", "quiz-answer-wrapper");
-// quizAnswerWrapperEl.className= "quiz-answer-wrapper";
 
 // dynamic elements
 // CREATES QUESTION h1 ELEMENT
 var questionEl = document.createElement("h1");
-// questionEl.setAttribute("id", "quiz-question");
 questionEl.className = "question";
 
 // CREATES DIV TO WRAP ANSWERS
@@ -98,7 +95,6 @@ function startQuiz() {
   quizOpt2Button.addEventListener("click", correctAnswer1);
   quizOpt3Button.addEventListener("click", wrongAnswer1);
   quizOpt4Button.addEventListener("click", wrongAnswer1);
-
 }
 
   var wrongAnswer1 = function () {

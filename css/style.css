@@ -87,6 +87,7 @@ body {
   .quiz-answer-wrapper {
     display: table; /* adjust to table for quiz questions */
     justify-content: center;
+    align-items: center;
     width: 100%;
     /* border: 3px solid green; */
     /* potentially add padding: 0.3vw 35vw 0.3vw 15vw; */
@@ -103,14 +104,15 @@ body {
   .quiz-answers {
       display: flex;
       flex-direction: column;
-      justify-items: left;
+      justify-content: center;
       /* padding: .03vw 3vw .03vw 7vw; adjust for quiz questions */
       font-size: 25px;
       /* border: 3px solid purple; */
       border-radius: 15px;
       list-style: none;
       /* list-style-position: inside; /* adjust for quiz questions! */
-      
+      width: 30vw;
+      margin: auto;
   }
 
   .quiz-answer-option {
@@ -133,6 +135,8 @@ body {
     padding: 1vw;
     border-radius: 15px;
     background-color: var(--secondary-color);
+    margin: 0.5vw;
+    text-align: left;
   }
   
   .spacer {
