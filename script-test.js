@@ -8,6 +8,7 @@ var quizQuestionsEl = document.querySelector(".quiz-topper");
 var quizIntroEl = document.querySelector(".intro")
 var startingParagraphEl = document.querySelector(".quiz-body");
 var newQuestionEl = document.querySelector("#quiz-question");
+console.log(newQuestionEl)
 
 // Countdown counter
 var countdown = function () {

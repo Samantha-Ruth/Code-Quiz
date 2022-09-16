@@ -17,7 +17,7 @@
         </div>
     </header>
     <main class="page-content" id="page-content">
-        <section id="section">
+        <section>
             <div id="quiz-wrapper" class="quiz-wrapper">
                 <!-- Header - introduction to coding quiz and questions -->
                 <div class = "intro">
@@ -33,11 +33,11 @@
                 </div>
                 <div id="quiz-answer-wrapper" class="quiz-answer-wrapper">
                 </div>  
-                <div class="spacer">
+                <!-- <div class="spacer">
                     <div class="qualifier">
-                        <!-- <h2 class="wrong">Wrong!</h2> -->
+                        <h2 class="wrong">Wrong!</h2>
                     </div>
-                </div>
+                </div> -->
                 <!-- <form> 
                     <label for="name">Enter your initials:</label>
                     <input type="text" name="initials" id="initials" class="form-input" />   

@@ -1,23 +1,58 @@
 // need a containerEl to select opening container?
 
-var startButtonEl = document.querySelector("#quiz-start");
 var timerEl = document.getElementById("countdown");
-// Variable starts a Timer that counts down from 30
 var timeLeft = 30;
 var savedTime = [];
 
+var startButtonEl = document.querySelector("#quiz-start");
+
+// original elements
+quizWrapperDiv = document.querySelector(".quiz-wrapper");
 var quizQuestionsEl = document.querySelector(".quiz-topper");
 var quizIntroEl = document.querySelector(".intro");
 var startingParagraphEl = document.querySelector(".quiz-body");
-var newQuestionEl = document.querySelector("#quiz-question");
-var incorrectEl = document.querySelector("#quiz-wrapper");
+
+// CREATES DIV TO WRAP ANSWERS
+var quizAnswerWrapperEl = document.createElement("div");
+// quizAnswerWrapperEl.setAttribute("id", "quiz-answer-wrapper");
+// quizAnswerWrapperEl.className= "quiz-answer-wrapper";
+
+// dynamic elements
+// CREATES QUESTION h1 ELEMENT
+var questionEl = document.createElement("h1");
+// questionEl.setAttribute("id", "quiz-question");
+questionEl.className = "question";
+
+// CREATES DIV TO WRAP ANSWERS
+var quizAnswerWrapperEl = document.createElement("div");
+quizAnswerWrapperEl.setAttribute("id", "quiz-answer-wrapper");
+quizAnswerWrapperEl.className = "quiz-answer-wrapper";
+
+// CREATES NEW UNORDERED LIST
+var quizAnswersEl = document.createElement("ul");
+questionEl.setAttribute("id", "quiz-answers");
+quizAnswersEl.className = "quiz-answers";
+
+var quizOpt1Button = document.createElement("button");
+quizOpt1Button.setAttribute = ("id", "answer-one-a");
+
+var quizOpt2Button = document.createElement("button");
+quizOpt2Button.setAttribute = ("id", "answer-one-b");
+
+var quizOpt3Button = document.createElement("button");
+quizOpt3Button.setAttribute = ("id", "answer-one-c");
+
+var quizOpt4Button = document.createElement("button");
+quizOpt4Button.setAttribute = ("id", "answer-one-d");
+
+var qualifierEl = document.querySelector("#section");
 
 // To decrease time by 10 seconds with a wrong answer
 function subtractTen() {
   timeLeft = timeLeft - 10;
 }
 
-// Countdown Counter
+// Countdown Counter  GOOD!
 var countdown = function () {
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
   var timeInterval = setInterval(function () {
@@ -40,144 +75,179 @@ var countdown = function () {
 };
 
 // When button is clicked, first question renders
-var startQuiz = function () {
-  // create new Question
-  var newQuestionEl = document.createElement("h1");
-  newQuestionEl.textContent = "Commonly used datatypes do NOT include:";
-  newQuestionEl.setAttribute("id", "quiz-question");
-  quizQuestionsEl.appendChild(newQuestionEl);
-  // remove old header/intro
-  quizIntroEl.remove();
-  startingParagraphEl.remove();
-  startButtonEl.remove();
+function startQuiz() {
+  questionEl.textContent = "Commonly used datatypes do NOT include:";
+  quizAnswerWrapperEl.appendChild(questionEl);
 
-  // create new unordered list with new answers
-  var quizAnswers1El = document.querySelector("#quiz-answer-wrapper");
-  var newAnswerArena = document.createElement("ul");
-  // new answer arena doesn't have any id/class
-  var newAnswer1AEl = document.createElement("li");
-  newAnswer1AEl.setAttribute("class", "quiz-answer-option");
-  newAnswer1AEl.innerHTML = "<button id='answer-one-a'>1. Strings</button>";
-  quizAnswers1El.appendChild(newAnswerArena);
-  newAnswerArena.appendChild(newAnswer1AEl);
+  quizOpt1Button.textContent = "1. Strings";
+  quizAnswersEl.appendChild(quizOpt1Button);
 
-  var newAnswer1BEl = document.createElement("li");
-  newAnswer1BEl.setAttribute("class", "quiz-answer-option");
-  newAnswer1BEl.innerHTML = "<button id='answer-one-b'>2. Booleans</button>";
-  newAnswerArena.appendChild(newAnswer1BEl);
+  quizOpt2Button.textContent = "2. Boolean";
+  quizAnswersEl.appendChild(quizOpt2Button);
 
-  var newAnswer1CEl = document.createElement("li");
-  newAnswer1CEl.setAttribute("class", "quiz-answer-option");
-  newAnswer1CEl.innerHTML = "<button id='answer-one-c'>3. Alerts</button>";
-  newAnswerArena.appendChild(newAnswer1CEl);
+  quizOpt3Button.textContent = "3. Alerts";
+  quizAnswersEl.appendChild(quizOpt3Button);
 
-  var newAnswer1DEl = document.createElement("li");
-  newAnswer1DEl.setAttribute("class", "quiz-answer-option");
-  newAnswer1DEl.innerHTML = "<button id='answer-one-d'>4. Numbers</button>";
-  newAnswerArena.appendChild(newAnswer1DEl);
+  quizOpt4Button.textContent = "4. Numbers";
+  quizAnswersEl.appendChild(quizOpt4Button);
 
-  newAnswer1AEl.addEventListener("click", wrongAnswer);
-  newAnswer1BEl.addEventListener("click", correctAnswer);
-  newAnswer1CEl.addEventListener("click", wrongAnswer);
-  newAnswer1DEl.addEventListener("click", wrongAnswer);
-};
+  quizAnswerWrapperEl.appendChild(quizAnswersEl);
+  quizWrapperDiv.replaceWith(quizAnswerWrapperEl);
 
-var wrongAnswer = function () {
-  console.log("Wrong!");
-  renderWrong();
-  subtractTen();
-  questionTwo();
-};
+  quizOpt1Button.addEventListener("click", wrongAnswer1);
+  quizOpt2Button.addEventListener("click", correctAnswer1);
+  quizOpt3Button.addEventListener("click", wrongAnswer1);
+  quizOpt4Button.addEventListener("click", wrongAnswer1);
 
-var correctAnswer = function () {
-  console.log("Correct!");
-  renderCorrect();
-  questionTwo();
-};
+}
+
+  var wrongAnswer1 = function () {
+    console.log("Wrong!");
+    renderWrong();
+    subtractTen();
+    questionTwo();
+  };
+
+  var correctAnswer1 = function () {
+    console.log("Correct!");
+    renderCorrect();
+    questionTwo();
+  };
+
 
 var renderWrong = function () {
-  var spacerEl = document.createElement("div");
-  spacerEl.setAttribute("class", "spacer");
-
-  var qualifierEl = document.createElement("div");
-  qualifierEl.setAttribute("class", "qualifier");
+  console.log("Render Wrong hit!");
 
   var wrongEl = document.createElement("h2");
   wrongEl.setAttribute("class", "wrong");
+  wrongEl.textContent = "";
   wrongEl.textContent = "Wrong!";
 
-  incorrectEl.appendChild(spacerEl);
-  spacerEl.appendChild(qualifierEl);
   qualifierEl.appendChild(wrongEl);
 };
 
 var renderCorrect = function () {
-    var spacerEl = document.createElement("div");
-    spacerEl.setAttribute("class", "spacer");
-  
-    var qualifierEl = document.createElement("div");
-    qualifierEl.setAttribute("class", "qualifier");
-  
-    var wrongEl = document.createElement("h2");
-    wrongEl.setAttribute("class", "wrong");
-    wrongEl.textContent = "Correct!";
-  
-    incorrectEl.appendChild(spacerEl);
-    spacerEl.appendChild(qualifierEl);
-    qualifierEl.appendChild(wrongEl);
-  };
+  console.log("Render Wrong hit!");
+  var wrongEl = document.createElement("h2");
+  wrongEl.setAttribute("class", "correct");
+  wrongEl.textContent = "Correct!";
 
-// function correctAnswer1 () {
-
-//     var correctAnswer1AEl = document.querySelector("#answer-one-a")
-//     var correctAnswer1BEl = document.querySelector("#answer-one-b")
-//     var correctAnswer1CEl = document.querySelector("#answer-one-c")
-//     var correctAnswer1DEl = document.querySelector("#answer-one-d")
-
-//     if (correctAnswer1CEl.addEventListener("click", function() {
-//         console.log("Correct!");
-//     } else {
-//         console.log("Wrong!");
-//     }))
+  qualifierEl.appendChild(wrongEl);
+};
 
 var questionTwo = function () {
-  // newQuestionEl.textContent = ("The condition in an 'if/then' statement is enclosed with:")
-  // newQuestionEl.remove();
-  var question2El = document.createElement("h1");
-  question2El.setAttribute("id", "quiz-question");
-  question2El.textContent =
-    "The condition in an 'if/then' statement is enclosed with:";
+  questionEl.textContent =
+    "The condition in an if/else statement is enclosed with:";
+  quizOpt1Button.textContent = "1. Quotes";
+  quizOpt2Button.textContent = "2. Parentheses";
+  quizOpt3Button.textContent = "3. Curly Brackets";
+  quizOpt4Button.textContent = "4. Square Brackets";
 
-  quizQuestionsEl.appendChild(question2El);
-  // newQuestionEl.innerHTML = "<h1 id='quiz-topper'>The condition in an 'if/then' statement is enclosed with: </h1>";
-  newAnswer1AButtonEl.textContent = "1. Quotes";
-  newAnswer1BButtonEl.textContent = "2. Curly Brackets";
-  newAnswer1CButtonEl.textContent = "3. Square Brackets";
-  newAnswer1DEl.textContent = "4. Parentheses";
-
-  newAnswerArena.addEventListener("click", questionThree);
+  quizOpt1Button.addEventListener("click", wrongAnswer2);
+  quizOpt2Button.addEventListener("click", correctAnswer2);
+  quizOpt3Button.addEventListener("click", wrongAnswer2);
+  quizOpt4Button.addEventListener("click", wrongAnswer2);
 };
+
+var wrongAnswer2 = function () {
+    console.log("Wrong!");
+    renderWrong();
+    subtractTen();
+    questionThree();
+  };
+
+  var correctAnswer2 = function () {
+    console.log("Correct!");
+    renderCorrect();
+    questionThree();
+  };
 
 var questionThree = function () {
-  // newQuestionEl.remove();
-  var question2El = document.createElement("h1");
-  question2El.setAttribute("id", "quiz-question");
-  question2El.textContent =
-    "The condition in an 'if/then' statement is enclosed with:";
-  quizQuestionsEl.appendChild(question2El);
-  // newQuestionEl.innerHTML = "<h1 id='quiz-topper'>The condition in an 'if/then' statement is enclosed with: </h1>";
-  newAnswer1AButtonEl.textContent = "1. Numbers and strings";
-  newAnswer1BButtonEl.textContent = "2. Other arrays";
-  newAnswer1CButtonEl.textContent = "3. Booleans";
-  newAnswer1DEl.textContent = "4. All of the above";
+  questionEl.textContent = "Arrays in javascript can be used to store:";
+  quizOpt1Button.textContent = "1. Numbers and strings";
+  quizOpt2Button.textContent = "2. Other arrays";
+  quizOpt3Button.textContent = "3. Booleans";
+  quizOpt4Button.textContent = "4. All of the Above";
+
+  quizOpt1Button.addEventListener("click", wrongAnswer3);
+  quizOpt2Button.addEventListener("click", wrongAnswer3);
+  quizOpt3Button.addEventListener("click", wrongAnswer3);
+  quizOpt4Button.addEventListener("click", correctAnswer3);
 };
+
+var wrongAnswer3 = function () {
+    console.log("Wrong!");
+    renderWrong();
+    subtractTen();
+    questionFour();
+  };
+
+  var correctAnswer3 = function () {
+    console.log("Correct!");
+    renderCorrect();
+    questionFour();
+  };
+
+var questionFour = function () {
+  questionEl.textContent =
+    "String values must be enclosed within _ when assigning to variables";
+  quizOpt1Button.textContent = "1. Commas";
+  quizOpt2Button.textContent = "2. Curly brackets";
+  quizOpt3Button.textContent = "3. Quotes";
+  quizOpt4Button.textContent = "4. Parentheses";
+
+  quizOpt1Button.addEventListener("click", wrongAnswer4);
+  quizOpt2Button.addEventListener("click", wrongAnswer4);
+  quizOpt3Button.addEventListener("click", correctAnswer4);
+  quizOpt4Button.addEventListener("click", wrongAnswer4);
+};
+
+var wrongAnswer4 = function () {
+    console.log("Wrong!");
+    renderWrong();
+    subtractTen();
+    questionFive();
+  };
+
+  var correctAnswer4 = function () {
+    console.log("Correct!");
+    renderCorrect();
+    questionFive();
+  };
+
+var questionFive = function () {
+  questionEl.textContent =
+    "A very useful tool during development and debugging for printed content to the debugger is:";
+  quizOpt1Button.textContent = "1. Javascript";
+  quizOpt2Button.textContent = "2. Terminal/bash";
+  quizOpt3Button.textContent = "3. For loops";
+  quizOpt4Button.textContent = "4. Console.log";
+
+  quizOpt1Button.addEventListener("click", wrongAnswer5);
+  quizOpt2Button.addEventListener("click", wrongAnswer5);
+  quizOpt3Button.addEventListener("click", wrongAnswer5);
+  quizOpt4Button.addEventListener("click", correctAnswer5);
+};
+
+var wrongAnswer5 = function () {
+    console.log("Wrong!");
+    renderWrong();
+    subtractTen();
+    endQuiz();
+  };
+
+  var correctAnswer5 = function () {
+    console.log("Correct!");
+    renderCorrect();
+    endQuiz();
+  };
 
 //End Quiz when time runs out
 // ******** NOT WORKING ********
 var endQuiz = function () {
   // Enter High Scores
-  var newQuestionEl = document.querySelector("#quiz-question");
-  newQuestionEl.textContent = "All Done!";
+  questionEl.textContent ="All Done!";
+
   var highScoresForm = createElement("form");
   highScoresForm.innerHTML =
     "<label for='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
@@ -234,6 +304,10 @@ function stopClock() {
   timeLeft = 0;
   console.log(saveTime);
 }
+
+startPage = function () {
+  location.reload();
+};
 
 // console.log(savedTime);
 
