@@ -8,7 +8,6 @@ var closingContainerEl = document.createElement("div");
 
 var timerEl = document.querySelector("#countdown");
 var timeLeft = 30;
-var scoreIdCounter = 0;
 var savedTime = [];
 var scores = [];
 
@@ -222,31 +221,34 @@ var endQuiz = function (event) {
     closingContainerEl.appendChild(closingCommentEl);
 
     // Enter Initials and High Scores
-    highScore();
+    enterHighScore();
     }
 
 
-var highScore = function() {
-    var highScoresFormEl = document.createElement("form");
-    highScoresFormEl.innerHTML =
+var enterHighScore = function() {
+    var enterHighScoreFormEl = document.createElement("form");
+    enterHighScoreFormEl.innerHTML =
       "<label form='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
-    questionEl.appendChild(highScoresFormEl);
-
-    highScoresFormEl.addEventListener("submit", saveScores);
+    questionEl.appendChild(enterHighScoreFormEl);
+    enterHighScoreFormEl.addEventListener("submit", saveScores);
  }
 
 var saveScores = function (event) {
       event.preventDefault();
+      // get initials from user's input
       var initialInput = document.querySelector("input[class='form-input']").value;
+      // create an object of the user's initials and the score
       var scoreObj = { initial: initialInput, time: savedTime, };
-      scoreObj.id = scoreIdCounter;
+      // push this to a global scope
       scores.push(scoreObj);
+      // Stringify it so localStorage can read it.
       localStorage.setItem("scores", JSON.stringify(scores));
+      // Run the view sccore with the object (shoould it be stringified?)
       viewScore(scoreObj);
       console.log(scoreObj);
     }
 
-    // LOADING SCORES IS NOT WORKING; ALSO PROBLEMS WITH VIEW HIGH SCORES BUTTON
+    // LOADING SCORES IS NOT WORKING; ALSO PROBLEMS WITH VIEW HIGH SCORES BUTTON ON FIRST PAGE (because no data?)
 var loadScore = function () {
     var savedScore = localStorage.getItem("scores");
     if (!savedScore) {
@@ -302,6 +304,12 @@ startButtonEl.addEventListener("click", countdown);
     //a. List stored on the DOM and accessed through a button
         // SAVING IS NOT WORKING, NEITHER IS RECALL
     //b. have ability to clear high scores
+
+    //saveScores() is working, using localStorage.setItem() method and JSON.stringify
+    // but it's only saving the current score, not a list of previous scores too... which I want.
+    //loadScore() is working, maybe? Doesn't respond on first page.
+    //viewScore has got some issues.  Button on front page doesn't work... 
+
 
 
 
