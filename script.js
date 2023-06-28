@@ -1,10 +1,25 @@
-// need a containerEl to select opening container?
+// starting from scratch
 
-var timerEl = document.getElementById("countdown");
+// But I did like the timer, so maybe I'll keep that aspect.
+
+// First off, what do I need to do? 
+
+// When I click the Start button, then a timer starts and I am presented with a question
+// When I answer a question, then I am presented with another quesiton
+// When I answer the question incorrectly, time is subtracted from the clock
+// When all questions are answered or timer reaches the end, then game is over
+// When game is over, can save initials and score.
+
+
+
+var startButtonEl = document.querySelector('#quiz-start')
+var qualifierEl = document.querySelector("#section");
+var correctnessEl = document.querySelector("#correctness")
+var correctnessHeaderEl = document.createElement("h2");
+
+var timerEl = document.querySelector("#countdown");
 var timeLeft = 30;
 var savedTime = [];
-
-var startButtonEl = document.querySelector("#quiz-start");
 
 // original elements
 quizWrapperDiv = document.querySelector(".quiz-wrapper");
@@ -18,7 +33,6 @@ var quizAnswerWrapperEl = document.createElement("div");
 // dynamic elements
 // CREATES QUESTION h1 ELEMENT
 var questionEl = document.createElement("h1");
-questionEl.className = "question";
 
 // CREATES DIV TO WRAP ANSWERS
 var quizAnswerWrapperEl = document.createElement("div");
@@ -30,282 +44,248 @@ var quizAnswersEl = document.createElement("ul");
 questionEl.setAttribute("id", "quiz-answers");
 quizAnswersEl.className = "quiz-answers";
 
+// CREATE BUTTONS FOR ANSWERS
 var quizOpt1Button = document.createElement("button");
-quizOpt1Button.setAttribute = ("id", "answer-one-a");
-
 var quizOpt2Button = document.createElement("button");
-quizOpt2Button.setAttribute = ("id", "answer-one-b");
-
 var quizOpt3Button = document.createElement("button");
-quizOpt3Button.setAttribute = ("id", "answer-one-c");
-
 var quizOpt4Button = document.createElement("button");
-quizOpt4Button.setAttribute = ("id", "answer-one-d");
-
 var qualifierEl = document.querySelector("#section");
 
-// To decrease time by 10 seconds with a wrong answer
-function subtractTen() {
-  timeLeft = timeLeft - 10;
+var countdown = function () {
+    // use the setInterval() method to execute function every 1000 milliseconds
+    var timeInterval = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            timerEl.textContent = "" + "Time's Up!";
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+    startQuiz();
 }
 
-// Countdown Counter  GOOD!
-var countdown = function () {
-  // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var timeInterval = setInterval(function () {
-    // As long as the `timeLeft` is greater than 1
-    if (timeLeft > 1) {
-      // Set the `textContent` of `timerEl` to show the remaining seconds
-      timerEl.textContent = "Time: " + timeLeft;
-      // Decrement `timeLeft` by 1
-      timeLeft--;
-    } else {
-      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timerEl.textContent = "" + "Time's Up!";
-      // Use `clearInterval()` to stop the timer
-      clearInterval(timeInterval);
-      // Call the `endQuiz()` function
-      endQuiz();
-    }
-  }, 1000);
-  startQuiz();
+startButtonEl.addEventListener("click", countdown);
+
+// Question 1
+var startQuiz = function () {
+    questionEl.textContent = "Commonly used datatypes do NOT include:";
+    quizAnswerWrapperEl.appendChild(questionEl);
+  
+    quizOpt1Button.textContent = "1. Strings";
+    quizOpt1Button.setAttribute("id", "wrong");
+    quizAnswersEl.appendChild(quizOpt1Button);
+  
+    quizOpt2Button.textContent = "2. Boolean";
+    quizOpt2Button.setAttribute("id", "wrong");
+    quizAnswersEl.appendChild(quizOpt2Button);
+  
+    quizOpt3Button.textContent = "3. Alerts";
+    quizOpt3Button.setAttribute("id", "correct");
+    quizAnswersEl.appendChild(quizOpt3Button);
+  
+    quizOpt4Button.textContent = "4. Numbers";
+    quizOpt4Button.setAttribute("id", "wrong");
+    quizAnswersEl.appendChild(quizOpt4Button);
+  
+    quizAnswerWrapperEl.appendChild(quizAnswersEl);
+    quizWrapperDiv.replaceWith(quizAnswerWrapperEl);
+  
+    // if click on b, render correct.  Else, render wrong
+    quizAnswersEl.addEventListener("click", renderQuestion2);
 };
 
-// When button is clicked, first question renders
-function startQuiz() {
-  questionEl.textContent = "Commonly used datatypes do NOT include:";
-  quizAnswerWrapperEl.appendChild(questionEl);
+//Question 2
+var renderQuestion2 = function (event) {
 
-  quizOpt1Button.textContent = "1. Strings";
-  quizAnswersEl.appendChild(quizOpt1Button);
+    console.log(event.target.id);
+    if (event.target.id === 'wrong') {
+        renderWrong()
+    } else {
+        renderCorrect()
+    }
 
-  quizOpt2Button.textContent = "2. Boolean";
-  quizAnswersEl.appendChild(quizOpt2Button);
+    questionEl.textContent = "The condition in an 'if/then' statement is enclosed with:";
+    quizOpt1Button.textContent = "1. Quotes";
+    quizOpt1Button.setAttribute("id", "wrong");
+    quizOpt2Button.textContent = "2. Curly Brackets";
+    quizOpt2Button.setAttribute("id", "correct");
+    quizOpt3Button.textContent = "3. Square Brackets";
+    quizOpt3Button.setAttribute("id", "wrong");
+    quizOpt4Button.textContent = "4. Parentheses";
+    quizOpt4Button.setAttribute("id", "wrong");
 
-  quizOpt3Button.textContent = "3. Alerts";
-  quizAnswersEl.appendChild(quizOpt3Button);
+    // if click on b, render correct.  Else, render wrong
+    quizAnswersEl.removeEventListener("click", renderQuestion2);
+    quizAnswersEl.addEventListener("click", renderQuestion3);
+};
 
-  quizOpt4Button.textContent = "4. Numbers";
-  quizAnswersEl.appendChild(quizOpt4Button);
+// Question 3
+var renderQuestion3 = function (event) {
+    console.log(event.target.id);
+    if (event.target.id === 'correct') {
+        renderCorrect()
+    } else {
+        renderWrong()
+    }
+    questionEl.textContent = "Arrays in javascript can be used to store  ____.";
+    quizOpt1Button.textContent = "1. Numbers and Strings";
+    quizOpt1Button.setAttribute("id", "wrong");
+    quizOpt2Button.textContent = "2. Other Arrays";
+    quizOpt2Button.setAttribute("id", "wrong");
+    quizOpt3Button.textContent = "3. Booleans";
+    quizOpt3Button.setAttribute("id", "wrong");
+    quizOpt4Button.textContent = "4. All of the Above";
+    quizOpt4Button.setAttribute("id", "correct");
 
-  quizAnswerWrapperEl.appendChild(quizAnswersEl);
-  quizWrapperDiv.replaceWith(quizAnswerWrapperEl);
 
-  quizOpt1Button.addEventListener("click", wrongAnswer1);
-  quizOpt2Button.addEventListener("click", correctAnswer1);
-  quizOpt3Button.addEventListener("click", wrongAnswer1);
-  quizOpt4Button.addEventListener("click", wrongAnswer1);
-}
+    // if click on b, render correct.  Else, render wrong
+    quizAnswersEl.removeEventListener("click", renderQuestion3);
+    quizAnswersEl.addEventListener("click", renderQuestion4);
+};
 
-  var wrongAnswer1 = function () {
-    console.log("Wrong!");
-    renderWrong();
-    subtractTen();
-    questionTwo();
-  };
+// Question 4
+var renderQuestion4 = function (event) {
+    console.log(event.target.id);
+    if (event.target.id === 'wrong') {
+        renderWrong()
+    } else {
+        renderCorrect()
+    }
+    questionEl.textContent = "String values must be enclosed within _ when assigning to variables.";
+    quizOpt1Button.textContent = "1. Commas";
+    quizOpt1Button.setAttribute("id", "wrong");
+    quizOpt2Button.textContent = "2. Curly Brackets";
+    quizOpt2Button.setAttribute("id", "wrong");
+    quizOpt3Button.textContent = "3. Quotes";
+    quizOpt3Button.setAttribute("id", "correct");
+    quizOpt4Button.textContent = "4. Parentheses";
+    quizOpt4Button.setAttribute("id", "wrong");
 
-  var correctAnswer1 = function () {
-    console.log("Correct!");
-    renderCorrect();
-    questionTwo();
-  };
 
+    // if click on b, render correct.  Else, render wrong
+    quizAnswersEl.removeEventListener("click", renderQuestion4);
+    quizAnswersEl.addEventListener("click", renderQuestion5);
+};
+
+
+var renderQuestion5 = function (event) {
+    console.log(event.target.id);
+    if (event.target.id === 'wrong') {
+        renderWrong()
+    } else {
+        renderCorrect()
+    }
+
+    questionEl.textContent = "A very useful tool during development and debugging for printed content to the debugger is:";
+    quizOpt1Button.textContent = "1. Javascript";
+    quizOpt1Button.setAttribute("id", "wrong");
+    quizOpt2Button.textContent = "2. Terminal/Bash";
+    quizOpt2Button.setAttribute("id", "wrong");
+    quizOpt3Button.textContent = "3. For Loops";
+    quizOpt3Button.setAttribute("id", "wrong");
+    quizOpt4Button.textContent = "4. Console.log";
+    quizOpt4Button.setAttribute("id", "correct");
+
+
+    // if click on b, render correct.  Else, render wrong
+    quizAnswersEl.removeEventListener("click", renderQuestion5);
+    quizAnswersEl.addEventListener("click", endQuiz);
+};
+
+// To decrease time by 10 seconds with a wrong answer
+var subtractTen = function () {
+    timeLeft = timeLeft - 10;
+  }  
 
 var renderWrong = function () {
-  console.log("Render Wrong hit!");
-
-  var wrongEl = document.createElement("h2");
-  wrongEl.setAttribute("class", "wrong");
-  wrongEl.textContent = "";
-  wrongEl.textContent = "Wrong!";
-
-  qualifierEl.appendChild(wrongEl);
-};
+    subtractTen();
+    correctnessEl.textContent = "Wrong!";
+    qualifierEl.appendChild(correctnessEl);
+  };
 
 var renderCorrect = function () {
-  console.log("Render Wrong hit!");
-  var wrongEl = document.createElement("h2");
-  wrongEl.setAttribute("class", "correct");
-  wrongEl.textContent = "Correct!";
-
-  qualifierEl.appendChild(wrongEl);
-};
-
-var questionTwo = function () {
-  questionEl.textContent =
-    "The condition in an if/else statement is enclosed with:";
-  quizOpt1Button.textContent = "1. Quotes";
-  quizOpt2Button.textContent = "2. Parentheses";
-  quizOpt3Button.textContent = "3. Curly Brackets";
-  quizOpt4Button.textContent = "4. Square Brackets";
-
-  quizOpt1Button.addEventListener("click", wrongAnswer2);
-  quizOpt2Button.addEventListener("click", correctAnswer2);
-  quizOpt3Button.addEventListener("click", wrongAnswer2);
-  quizOpt4Button.addEventListener("click", wrongAnswer2);
-};
-
-var wrongAnswer2 = function () {
-    console.log("Wrong!");
-    renderWrong();
-    subtractTen();
-    questionThree();
+    correctnessEl.textContent = "Correct!";
+    qualifierEl.appendChild(correctnessEl);
   };
 
-  var correctAnswer2 = function () {
-    console.log("Correct!");
-    renderCorrect();
-    questionThree();
-  };
+var stopClock = function () {
+    var saveTime = timeLeft;
+    savedTime.push(saveTime); //save this time to storage
+    timeLeft = 0;
+    console.log(saveTime);
+  }
 
-var questionThree = function () {
-  questionEl.textContent = "Arrays in javascript can be used to store:";
-  quizOpt1Button.textContent = "1. Numbers and strings";
-  quizOpt2Button.textContent = "2. Other arrays";
-  quizOpt3Button.textContent = "3. Booleans";
-  quizOpt4Button.textContent = "4. All of the Above";
-
-  quizOpt1Button.addEventListener("click", wrongAnswer3);
-  quizOpt2Button.addEventListener("click", wrongAnswer3);
-  quizOpt3Button.addEventListener("click", wrongAnswer3);
-  quizOpt4Button.addEventListener("click", correctAnswer3);
-};
-
-var wrongAnswer3 = function () {
-    console.log("Wrong!");
-    renderWrong();
-    subtractTen();
-    questionFour();
-  };
-
-  var correctAnswer3 = function () {
-    console.log("Correct!");
-    renderCorrect();
-    questionFour();
-  };
-
-var questionFour = function () {
-  questionEl.textContent =
-    "String values must be enclosed within _ when assigning to variables";
-  quizOpt1Button.textContent = "1. Commas";
-  quizOpt2Button.textContent = "2. Curly brackets";
-  quizOpt3Button.textContent = "3. Quotes";
-  quizOpt4Button.textContent = "4. Parentheses";
-
-  quizOpt1Button.addEventListener("click", wrongAnswer4);
-  quizOpt2Button.addEventListener("click", wrongAnswer4);
-  quizOpt3Button.addEventListener("click", correctAnswer4);
-  quizOpt4Button.addEventListener("click", wrongAnswer4);
-};
-
-var wrongAnswer4 = function () {
-    console.log("Wrong!");
-    renderWrong();
-    subtractTen();
-    questionFive();
-  };
-
-  var correctAnswer4 = function () {
-    console.log("Correct!");
-    renderCorrect();
-    questionFive();
-  };
-
-var questionFive = function () {
-  questionEl.textContent =
-    "A very useful tool during development and debugging for printed content to the debugger is:";
-  quizOpt1Button.textContent = "1. Javascript";
-  quizOpt2Button.textContent = "2. Terminal/bash";
-  quizOpt3Button.textContent = "3. For loops";
-  quizOpt4Button.textContent = "4. Console.log";
-
-  quizOpt1Button.addEventListener("click", wrongAnswer5);
-  quizOpt2Button.addEventListener("click", wrongAnswer5);
-  quizOpt3Button.addEventListener("click", wrongAnswer5);
-  quizOpt4Button.addEventListener("click", correctAnswer5);
-};
-
-var wrongAnswer5 = function () {
-    console.log("Wrong!");
-    renderWrong();
-    subtractTen();
-    endQuiz();
-  };
-
-  var correctAnswer5 = function () {
-    console.log("Correct!");
-    renderCorrect();
-    endQuiz();
-  };
-
-//End Quiz when time runs out
-// ******** NOT WORKING ********
-var endQuiz = function () {
-  // Enter High Scores
-  questionEl.textContent ="All Done!";
-
-  var highScoresForm = createElement("form");
-  highScoresForm.innerHTML =
-    "<label for='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
-  newQuestionEl.appendChild(highScoresForm);
-
-  scores[i].setAttribute("", scoreIdCounter);
-  // Save High Scores
-  var scores = [];
-  var highScoresObj = { name: highScoreInput, score: savedTime };
-  scoresObj.id = scoreIdCounter;
-  scores.push(highScoresObj);
-  // save tasks to localStorage
-  savedScores();
-  // increase task counter for next unique score id
-  scoreIdCounter++;
-
-  var savedScores = function () {
-    localStorage.setItem("scores", JSON.stringify(scores));
-  };
-
-  // Print High Scores
-  var loadScores = function () {
-    // assign score variable
-    var savedScores = localStorage.getItem("scores");
-    // if scores = null set scores back to an empty array
-    if (!savedScores) {
-      return false;
+var endQuiz = function (event) {
+    stopClock();
+    if (event.target.id === 'wrong') {
+        renderWrong()
+    } else {
+        renderCorrect()
     }
-  };
-  // retrieve scores from local storage
-  scores = JSON.parse(scores);
+    // Enter High Scores
+    var doneEl = document.createElement("h2");
+    doneEl.setAttribute("class", "done");
+    doneEl.textContent = "All Done!";
+    correctnessEl.appendChild(doneEl);
+    }
 
-  //print items to page
-  var newQuestionEl = document.querySelector("#quiz-question");
-  newQuestionEl.textContent = "";
-  var printHighScoresEl = createElement("ol");
-  var printHighScoresListEl = createElement("li");
-  printHighScoresListEl.setAttribute("class=print-high-scores");
-  scores[i].setAttribute(loadScores, scoreIdCounter);
-  newQuestionEl.appendChild(printHighScoresEl);
-  printHighScoresEl.appendChild(printHighScoresListEl);
-  var resetReturnButtonsEl = createElement("div");
-  resetReturnButtonsEl.getAttribute("class=high-scores");
-  resetReturnButtonsEl.innerHTML(
-    "<button>Go Back</button><button type='reset'>Clear High Scores</button>"
-  );
-};
 
-// *** NEED TO PUT AT END OF QUESTIONS *** //
-// To stop the clock when user reaches the end of the questions.
-function stopClock() {
-  var saveTime = timeLeft;
-  savedTime.push(saveTime); //save this time to storage
-  timeLeft = 0;
-  console.log(saveTime);
+var highScore = function() {
+    // clear questions
+    var highScoresForm = document.createElement("form");
+    highScoresForm.innerHTML =
+      "<label for='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
+    qualifierEl.appendChild(highScoresForm);
 }
+  
+var savedScores = function () {
+      localStorage.setItem("scores", JSON.stringify(scores));
+    }
 
-startPage = function () {
-  location.reload();
-};
 
-// console.log(savedTime);
+// Focus on one thing: the quiz ONE CODE BLOCK
+    //3. Need to build End of Quiz.
+        //A. End of timer
+        //B. Clear quiz answers
+        //C. Enter initials
 
-// Want countdown to start, and the questions to start as well.  Need to put inside countdown function?
-startButtonEl.addEventListener("click", countdown);
+// Extra:
+//  Enter initials and score
+    //a. List stored on the DOM and accessed through a button
+    //b. have ability to clear high scores
+    //c. have ability to "go back"? 
+
+
+
+
+
+
+
+
+
+// Focus on one thing: the quiz ONE CODE BLOCK
+    //1. Click on start and quiz starts
+        //A. Need a start button.
+        //B. Need an event listener waiting for a click of the start button.
+        //C. Need methods that occur after the click of the start button.
+            //I. countdown()
+                //a. separate method, counts down by seconds
+            //II. startQuiz() 
+    //2. Presented with question
+    //3. Told whether answer is right or wrong
+        //A. print "wrong" or "correct"
+            //I. conditional Methods wrongAnswer() or correctAnswer()
+            //II. wrongAnswer() method includes printing "wrong" and dropping the timer
+            //III. both methods continue the questions
+    //4. Presented with new question
+    //3. End of Quiz. - needs to be it's own function because it can be invoked multiple ways
+        //A. End of timer
+        //B. End of questions
+        //C. Enter initials
+
+// Extra:
+//  Enter initials and score
+    //a. List stored on the DOM and accessed through a button
+    //b. have ability to clear high scores
+    //c. have ability to "go back"? 
