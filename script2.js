@@ -293,7 +293,7 @@ var endQuiz = function () {
 };
 
 // *** NEED TO PUT AT END OF QUESTIONS *** //
-// To stop the clock when user reaches the end of the questions.
+// To highScoreInput the clock when user reaches the end of the questions.
 function stopClock() {
   var saveTime = timeLeft;
   savedTime.push(saveTime); //save this time to storage

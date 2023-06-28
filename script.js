@@ -1,25 +1,17 @@
-// starting from scratch
-
-// But I did like the timer, so maybe I'll keep that aspect.
-
-// First off, what do I need to do? 
-
-// When I click the Start button, then a timer starts and I am presented with a question
-// When I answer a question, then I am presented with another quesiton
-// When I answer the question incorrectly, time is subtracted from the clock
-// When all questions are answered or timer reaches the end, then game is over
-// When game is over, can save initials and score.
-
-
-
-var startButtonEl = document.querySelector('#quiz-start')
+var startButtonEl = document.querySelector('#quiz-start');
 var qualifierEl = document.querySelector("#section");
-var correctnessEl = document.querySelector("#correctness")
+var correctnessEl = document.querySelector("#correctness");
 var correctnessHeaderEl = document.createElement("h2");
+var viewScoresButtonEl = document.querySelector("#score-button");
+var viewScoreEl = document.createElement("div");
+var closingContainerEl = document.createElement("div");
 
 var timerEl = document.querySelector("#countdown");
 var timeLeft = 30;
+var scoreIdCounter = 0;
 var savedTime = [];
+var scores = [];
+
 
 // original elements
 quizWrapperDiv = document.querySelector(".quiz-wrapper");
@@ -41,7 +33,7 @@ quizAnswerWrapperEl.className = "quiz-answer-wrapper";
 
 // CREATES NEW UNORDERED LIST
 var quizAnswersEl = document.createElement("ul");
-questionEl.setAttribute("id", "quiz-answers");
+questionEl.setAttribute("id", "quiz-question");
 quizAnswersEl.className = "quiz-answers";
 
 // CREATE BUTTONS FOR ANSWERS
@@ -64,8 +56,6 @@ var countdown = function () {
     }, 1000);
     startQuiz();
 }
-
-startButtonEl.addEventListener("click", countdown);
 
 // Question 1
 var startQuiz = function () {
@@ -218,43 +208,100 @@ var stopClock = function () {
 
 var endQuiz = function (event) {
     stopClock();
-    if (event.target.id === 'wrong') {
-        renderWrong()
-    } else {
-        renderCorrect()
-    }
-    // Enter High Scores
-    var doneEl = document.createElement("h2");
-    doneEl.setAttribute("class", "done");
-    doneEl.textContent = "All Done!";
-    correctnessEl.appendChild(doneEl);
+
+    // Clear the screen except "All Done!"
+    questionEl.textContent = "All done!";
+    quizAnswersEl.remove();
+    correctnessEl.remove();
+
+    // Add Comment and final score
+    var closingCommentEl = document.createElement("p");
+    closingCommentEl.className = ("closing-message");
+    closingCommentEl.innerHTML = "Your final score is " + savedTime + ".";
+    questionEl.appendChild(closingContainerEl);
+    closingContainerEl.appendChild(closingCommentEl);
+
+    // Enter Initials and High Scores
+    highScore();
     }
 
 
 var highScore = function() {
-    // clear questions
-    var highScoresForm = document.createElement("form");
-    highScoresForm.innerHTML =
-      "<label for='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
-    qualifierEl.appendChild(highScoresForm);
-}
-  
-var savedScores = function () {
+    var highScoresFormEl = document.createElement("form");
+    highScoresFormEl.innerHTML =
+      "<label form='name'>Enter your initials:</label><input type='text'name='initials'id='initials'class='form-input'/><button type='submit'>Submit</button>";
+    questionEl.appendChild(highScoresFormEl);
+
+    highScoresFormEl.addEventListener("submit", saveScores);
+ }
+
+var saveScores = function (event) {
+      event.preventDefault();
+      var initialInput = document.querySelector("input[class='form-input']").value;
+      var scoreObj = { initial: initialInput, time: savedTime, };
+      scoreObj.id = scoreIdCounter;
+      scores.push(scoreObj);
       localStorage.setItem("scores", JSON.stringify(scores));
+      viewScore(scoreObj);
+      console.log(scoreObj);
     }
 
+    // LOADING SCORES IS NOT WORKING; ALSO PROBLEMS WITH VIEW HIGH SCORES BUTTON
+var loadScore = function () {
+    var savedScore = localStorage.getItem("scores");
+    if (!savedScore) {
+        return false;
+    }
+    savedScore = JSON.parse(savedScore);
+    
+    for (var i = 0; i < savedScore.length; i++) {
+        viewScore(savedScore[i]);
+    }
+    }
 
-// Focus on one thing: the quiz ONE CODE BLOCK
-    //3. Need to build End of Quiz.
-        //A. End of timer
-        //B. Clear quiz answers
-        //C. Enter initials
+var viewScore = function (scoreObj) {
 
-// Extra:
+    // document.getElementById("view-score").disabled = true;
+    questionEl.replaceWith(viewScoreEl);
+    quizAnswersEl.remove();
+    correctnessEl.remove();
+    
+    
+    var viewScoreHeader = document.createElement("h1");
+    viewScoreHeader.textContent = "View High Scores";
+    viewScoreEl.appendChild(viewScoreHeader);
+    
+    var viewScoreList = document.createElement("ul");
+    viewScoreList.className = ("view-score-list");
+    
+    listItem = document.createElement("li");
+    listItem.innerHTML = scoreObj.initial + ": " + scoreObj.time;
+    viewScoreList.appendChild(listItem);
+    
+    viewScoreHeader.appendChild(viewScoreList);
+    
+    var goBack = document.createElement("button");
+    goBack.className = ("btn");
+    goBack.textContent = "Go back";
+    viewScoreList.appendChild(goBack);
+    
+    
+    goBack.addEventListener("click", startPage);
+    }
+
+    startPage = function () {
+        location.reload();
+    }
+
+viewScoresButtonEl.addEventListener("click", loadScore);
+startButtonEl.addEventListener("click", countdown);
+    
+
+
 //  Enter initials and score
     //a. List stored on the DOM and accessed through a button
+        // SAVING IS NOT WORKING, NEITHER IS RECALL
     //b. have ability to clear high scores
-    //c. have ability to "go back"? 
 
 
 
