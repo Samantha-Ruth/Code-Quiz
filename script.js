@@ -1,9 +1,7 @@
 // Quiz Elements
 var quizWrapperDiv = document.querySelector(".quiz-wrapper");
 var quizIntroEl = document.querySelector(".intro");
-var startingParagraphEl = document.querySelector(".quiz-body");
 var quizStartButtonEl = document.querySelector("#quiz-start");
-var quizQuestionsEl = document.querySelector(".quiz-topper");
 var questionEl = document.createElement("h1");
 var quizAnswerWrapperEl = document.createElement("div");
 quizAnswerWrapperEl.setAttribute("id", "quiz-answer-wrapper");
@@ -13,7 +11,6 @@ questionEl.setAttribute("id", "heading");
 quizAnswersEl.className = "quiz-answers";
 var qualifierEl = document.querySelector("#section");
 var correctnessEl = document.querySelector("#correctness");
-var correctnessHeaderEl = document.createElement("h2");
 var closingContainerEl = document.createElement("div");
 
 // Time Elements
