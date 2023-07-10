@@ -12,7 +12,7 @@ This project's goal was to create a multiple-choice quiz using javascript, speci
 ![Screen Shot 2022-05-15 at 7 46 07 PM](https://user-images.githubusercontent.com/64170123/168510954-6962b976-35e2-49b3-a243-f384d9aa6567.jpg)
 
 
-This project helped introduce me to javascript event selectors, creating dynamic elements with new attributes, storing and retrieving items from local storage, and continuing with html structuring and css styling.  I did not finish as much as I wanted, having a little bit of trouble with the event selectors on dynamically created elements.  I hope to further my understanding of these items in the future. 
+This project helped introduce me to javascript event selectors, creating dynamic elements with new attributes, storing and retrieving items from local storage, and continuing with html structuring and css styling.  This project combined a lot of different elements within it and I initially had troubles moving from one question to the next, as well as getting the timer to stop when the questions were finished.  I came back and improved the code once I learned more and felt more comfortable with Javascript.  
 
 The link to the deployed project is here: https://samantha-ruth.github.io/Code-Quiz/
 
