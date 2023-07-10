@@ -186,61 +186,9 @@ var renderCorrect = function () {
   qualifierEl.appendChild(correctnessEl);
 };
 
-// -----------------------------------------------------
-// STARTQUIZ() and COUNTDOWN() ARE THE SAME? Should I use this one instead?
-
-// var countdown = function () {
-//   // use the setInterval() method to execute function every 1000 milliseconds
-//   var timeInterval = setInterval(function () {
-//     if (timeLeft > 1) {
-//       timerEl.textContent = "Time: " + timeLeft;
-//       timeLeft--;
-//     } else {
-//       timerEl.textContent = "" + "Time's Up!";
-//       clearInterval(timeInterval);
-//       timeLeft = 0;
-//       endQuiz();
-//     }
-//   }, 1000);
-//   startQuiz();
-// };
-// --------------------------------------------------------
-
-// not really clearing the interval when called... Put into End Quiz
-// var stopClock = function () {
-//   if (timeLeft < 0) {
-//     timeLeft = 0;
-//   }
-//   var saveTime = timeLeft;
-//   savedTime.push(saveTime); //save this time to storage
-//   clearInterval(timeInterval);
-//   console.log("cleared the interval!")
-// };
-
-// var stopClock = function() {
-//     console.log(timeLeft);
-//   if (timeLeft < 0) {
-//     timeLeft = 0;
-//   }
-
-//   // Turn of timer if active 
-//   // in order to stop the clock, need to clear the interval with the id of the interval we want to stop, which is timeInterval (I believe)
-//   if (timeInterval) {
-//     clearInterval(timeInterval)
-//   }
-  
-//   var saveTime = timeLeft;
-//   console.log(saveTime);
-//   savedTime.push(saveTime); //save this time to storage
-//   console.log(savedTime);
-//   clearInterval(timeInterval);
-//   console.log(timeInterval); // undefined
-// }
 var endQuiz = function () {
-  // stop the clock  This isn't working!
-//   stopClock();
-console.log("end quiz hit!")
 timerEl.style.display = "none";
+// for some reason, clear interval doesn't seem to work.
 clearInterval(timeInterval);
 
   // Clear the screen except "All Done!"
