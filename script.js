@@ -16,6 +16,7 @@ var closingContainerEl = document.createElement("div");
 // Time Elements
 var savedTime = [];
 var timeInterval;
+var score;
 var timeLeft = 30;
 var timerEl = document.querySelector("#countdown");
 
@@ -31,23 +32,21 @@ var quizOpt3Button = document.createElement("button");
 var quizOpt4Button = document.createElement("button");
 
 var countdown = function () {
-    // use the setInterval() method to execute function every 1000 milliseconds
-    var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
-            timerEl.textContent = "Time: " + timeLeft;
-            timeLeft--;
-        } else {
-            timerEl.textContent = "" + "Time's Up!";
-            clearInterval(timeInterval);
-        }
-    }, 1000);
-    startQuiz();
-}
+  // use the setInterval() method to execute function every 1000 milliseconds
+  var timeInterval = setInterval(function () {
+    if (timeLeft > 1) {
+      timerEl.textContent = "Time: " + timeLeft;
+      timeLeft--;
+    } else {
+      timerEl.textContent = "" + "Time's Up!";
+      clearInterval(timeInterval);
+    }
+  }, 1000);
+  startQuiz();
+};
 
 // Question 1
 var startQuiz = function () {
-
-
   questionEl.textContent = "Commonly used datatypes do NOT include:";
   quizAnswerWrapperEl.appendChild(questionEl);
 
@@ -187,9 +186,12 @@ var renderCorrect = function () {
 };
 
 var endQuiz = function () {
-timerEl.style.display = "none";
-// for some reason, clear interval doesn't seem to work.
-clearInterval(timeInterval);
+  clearInterval(timeInterval);
+  score = timeLeft;
+  console.log(score);
+  timerEl.style.display = "none";
+  // for some reason, clear interval doesn't seem to work. Declared globally etc.
+  // timeLeft is still counting down.
 
   // Clear the screen except "All Done!"
   questionEl.textContent = "All done!";
@@ -199,7 +201,7 @@ clearInterval(timeInterval);
   // Add Comment and final score
   var closingCommentEl = document.createElement("p");
   closingCommentEl.className = "closing-message";
-  closingCommentEl.innerHTML = "Your final score is " + timeLeft + ".";
+  closingCommentEl.innerHTML = "Your final score is " + score + ".";
   questionEl.appendChild(closingContainerEl);
   closingContainerEl.appendChild(closingCommentEl);
 
@@ -212,30 +214,29 @@ clearInterval(timeInterval);
   enterHighScoresFormEl.addEventListener("submit", quizFormHandler);
 };
 
-var quizFormHandler = function(event) {
+var quizFormHandler = function (event) {
   // Prevent page refresh
   event.preventDefault();
 
   // Load initials
   var quizInitials = document.querySelector("input[name='initials']").value;
-  if (quizInitials === "")
-      return false;
+  if (quizInitials === "") return false;
 
   // Make score object
   var thisScore = {
-      score: timeLeft,
-      initials: quizInitials
+    score: score,
+    initials: quizInitials,
   };
 
   // Store score object in array of high scores
   highScores.push(thisScore);
   // Store high scores in local storage to persist through page reloads
-  localStorage.setItem("high-scores",JSON.stringify(highScores));
+  localStorage.setItem("high-scores", JSON.stringify(highScores));
   console.log(highScores);
 
   // Update and advance to high scores display
   showHighScores();
-}
+};
 
 // Load high scores from local persistent storage
 var loadScores = function () {
@@ -256,7 +257,6 @@ var showHighScores = function () {
   quizAnswersEl.remove();
   correctnessEl.remove();
 
-
   var loadScoreHeader = document.createElement("h1");
   loadScoreHeader.textContent = "High Scores";
   highScoreHeaderEl.appendChild(loadScoreHeader);
@@ -266,9 +266,9 @@ var showHighScores = function () {
   var loadScoreList = document.createElement("ul");
   loadScoreList.className = "view-score-list";
   loadScoreHeader.appendChild(loadScoreList);
-  
+
   // Sort high scores in descending order
-  highScores.sort((a, b) => (a.score < b.score) ? 1 : -1);
+  highScores.sort((a, b) => (a.score < b.score ? 1 : -1));
 
   for (var i = 0; i < highScores.length; i++) {
     listItemEl = document.createElement("li");
@@ -297,13 +297,13 @@ var showHighScores = function () {
 var clearScores = function () {
   highScores = [];
   // Store empty array in local storage
-  localStorage.setItem("high-scores",JSON.stringify(highScores));
+  localStorage.setItem("high-scores", JSON.stringify(highScores));
   // Update view
   showHighScores();
   // localStorage.clear();
-  
+
   location.reload();
-}
+};
 
 var startPage = function () {
   location.reload();
