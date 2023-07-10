@@ -1,3 +1,29 @@
+// Focus on one thing: the quiz ONE CODE BLOCK
+//1. Click on start and quiz starts
+//A. Need a start button.
+//B. Need an event listener waiting for a click of the start button.
+//C. Need methods that occur after the click of the start button.
+//I. countdown()
+//a. separate method, counts down by seconds
+//II. startQuiz()
+//2. Presented with question
+//3. Told whether answer is right or wrong
+//A. print "wrong" or "correct"
+//I. conditional Methods wrongAnswer() or correctAnswer()
+//II. wrongAnswer() method includes printing "wrong" and dropping the timer
+//III. both methods continue the questions
+//4. Presented with new question
+//3. End of Quiz. - needs to be it's own function because it can be invoked multiple ways
+//A. End of timer
+//B. End of questions
+//C. Enter initials
+
+// Extra:
+//  Enter initials and score
+//a. List stored on the DOM and accessed through a button
+//b. have ability to clear high scores
+//c. have ability to "go back"
+
 // Quiz Elements
 var quizWrapperDiv = document.querySelector(".quiz-wrapper");
 var quizIntroEl = document.querySelector(".intro");
@@ -307,63 +333,7 @@ var clearScores = function () {
 
 var startPage = function () {
   location.reload();
-
-  // clickOnHighScores();
 };
-
-// var highScoreList = function () {
-//   // maybe save this under viewHighScore Button clicked?
-//   console.log("high score button clicked!");
-//   // introStatementEl.remove();
-//   quizStartButtonEl.remove();
-//   showHighScores();
-// };
-
-// LOADING SCORES IS NOT WORKING; ALSO PROBLEMS WITH VIEW HIGH SCORES BUTTON ON FIRST PAGE (because no data?)
-// var loadHighScores = function () {
-//   highScores = localStorage.getItem("high-scores", highScores);
-//   if (!highScores) {
-//     highScores = [];
-//     return false;
-//   }
-//   highScores = JSON.parse(highScores);
-// };
 
 viewHighScoresButtonEl.addEventListener("click", showHighScores);
 quizStartButtonEl.addEventListener("click", countdown);
-
-//  Enter initials and score
-//a. List stored on the DOM and accessed through a button
-// SAVING IS NOT WORKING, NEITHER IS RECALL
-//b. have ability to clear high scores
-
-//saveScores() is working, using localStorage.setItem() method and JSON.stringify
-// but it's only saving the current score, not a list of previous scores too... which I want.
-//loadScore() is working, maybe? Doesn't respond on first page.
-//loadScore has got some issues.  Button on front page doesn't work...
-
-// Focus on one thing: the quiz ONE CODE BLOCK
-//1. Click on start and quiz starts
-//A. Need a start button.
-//B. Need an event listener waiting for a click of the start button.
-//C. Need methods that occur after the click of the start button.
-//I. countdown()
-//a. separate method, counts down by seconds
-//II. startQuiz()
-//2. Presented with question
-//3. Told whether answer is right or wrong
-//A. print "wrong" or "correct"
-//I. conditional Methods wrongAnswer() or correctAnswer()
-//II. wrongAnswer() method includes printing "wrong" and dropping the timer
-//III. both methods continue the questions
-//4. Presented with new question
-//3. End of Quiz. - needs to be it's own function because it can be invoked multiple ways
-//A. End of timer
-//B. End of questions
-//C. Enter initials
-
-// Extra:
-//  Enter initials and score
-//a. List stored on the DOM and accessed through a button
-//b. have ability to clear high scores
-// //c. have ability to "go back"
