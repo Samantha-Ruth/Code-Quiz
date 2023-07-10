@@ -30,19 +30,23 @@ var quizOpt2Button = document.createElement("button");
 var quizOpt3Button = document.createElement("button");
 var quizOpt4Button = document.createElement("button");
 
+var countdown = function () {
+    // use the setInterval() method to execute function every 1000 milliseconds
+    var timeInterval = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            timerEl.textContent = "" + "Time's Up!";
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+    startQuiz();
+}
+
 // Question 1
 var startQuiz = function () {
-  var timeInterval = setInterval(function () {
-    if (timeLeft > 1) {
-      timeLeft--;
-      timerEl.textContent = "Time: " + timeLeft;
-    } else {
-      timerEl.textContent = "" + "Time's Up!";
-      clearInterval(timeInterval);
-      timeLeft = 0;
-      endQuiz();
-    }
-  }, 1000);
+
 
   questionEl.textContent = "Commonly used datatypes do NOT include:";
   quizAnswerWrapperEl.appendChild(questionEl);
@@ -235,6 +239,8 @@ var renderCorrect = function () {
 var endQuiz = function () {
   // stop the clock  This isn't working!
 //   stopClock();
+console.log("end quiz hit!")
+timerEl.style.display = "none";
 clearInterval(timeInterval);
 
   // Clear the screen except "All Done!"
@@ -376,7 +382,7 @@ var startPage = function () {
 // };
 
 viewHighScoresButtonEl.addEventListener("click", showHighScores);
-quizStartButtonEl.addEventListener("click", startQuiz);
+quizStartButtonEl.addEventListener("click", countdown);
 
 //  Enter initials and score
 //a. List stored on the DOM and accessed through a button
