@@ -161,7 +161,7 @@ var renderQuestion5 = function (event) {
   quizOpt4Button.textContent = "4. Console.log";
   quizOpt4Button.setAttribute("id", "correct");
 
-  // if click on b, render correct.  Else, render wrong
+  // remove click listener to render question 5, and instead start endQuiz
   quizAnswersEl.removeEventListener("click", renderQuestion5);
   quizAnswersEl.addEventListener("click", endQuiz);
 };
@@ -213,22 +213,29 @@ var renderCorrect = function () {
 //   console.log("cleared the interval!")
 // };
 
+// var stopClock = function() {
+//     console.log(timeLeft);
+//   if (timeLeft < 0) {
+//     timeLeft = 0;
+//   }
+
+//   // Turn of timer if active 
+//   // in order to stop the clock, need to clear the interval with the id of the interval we want to stop, which is timeInterval (I believe)
+//   if (timeInterval) {
+//     clearInterval(timeInterval)
+//   }
+  
+//   var saveTime = timeLeft;
+//   console.log(saveTime);
+//   savedTime.push(saveTime); //save this time to storage
+//   console.log(savedTime);
+//   clearInterval(timeInterval);
+//   console.log(timeInterval); // undefined
+// }
 var endQuiz = function () {
   // stop the clock  This isn't working!
-  console.log(timeLeft);
-  if (timeLeft < 0) {
-    timeLeft = 0;
-  }
-  console.log(timeInterval); // undefined
-  clearInterval(timeInterval);
-  clearInterval(timeLeft);
-
-  var saveTime = timeLeft;
-  console.log(saveTime);
-  savedTime.push(saveTime); //save this time to storage
-  console.log(savedTime);
-  clearInterval(timeInterval);
-  console.log(timeInterval); // undefined
+//   stopClock();
+clearInterval(timeInterval);
 
   // Clear the screen except "All Done!"
   questionEl.textContent = "All done!";
@@ -238,7 +245,7 @@ var endQuiz = function () {
   // Add Comment and final score
   var closingCommentEl = document.createElement("p");
   closingCommentEl.className = "closing-message";
-  closingCommentEl.innerHTML = "Your final score is " + savedTime + ".";
+  closingCommentEl.innerHTML = "Your final score is " + timeLeft + ".";
   questionEl.appendChild(closingContainerEl);
   closingContainerEl.appendChild(closingCommentEl);
 
@@ -262,7 +269,7 @@ var quizFormHandler = function(event) {
 
   // Make score object
   var thisScore = {
-      score: savedTime,
+      score: timeLeft,
       initials: quizInitials
   };
 
@@ -291,6 +298,11 @@ var showHighScores = function () {
   loadScores();
 
   quizIntroEl.replaceWith(highScoreHeaderEl);
+  questionEl.replaceWith(highScoreHeaderEl);
+  quizAnswersEl.remove();
+  correctnessEl.remove();
+
+
   var loadScoreHeader = document.createElement("h1");
   loadScoreHeader.textContent = "High Scores";
   highScoreHeaderEl.appendChild(loadScoreHeader);
