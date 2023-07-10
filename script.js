@@ -50,6 +50,7 @@ var timerEl = document.querySelector("#countdown");
 var viewHighScoresButtonEl = document.querySelector("#score-button");
 var highScoreHeaderEl = document.createElement("div");
 var highScores = [];
+var persist;
 
 // CREATE BUTTONS FOR ANSWERS
 var quizOpt1Button = document.createElement("button");
@@ -256,9 +257,11 @@ var quizFormHandler = function (event) {
 
   // Store score object in array of high scores
   highScores.push(thisScore);
-  // Store high scores in local storage to persist through page reloads
-  localStorage.setItem("high-scores", JSON.stringify(highScores));
-  console.log(highScores);
+  var stringified = JSON.stringify(highScores);
+  console.log(stringified);
+
+    // Store high scores in local storage to persist through page reloads
+    localStorage.setItem("high-scores", stringified);
 
   // Update and advance to high scores display
   showHighScores();
@@ -268,7 +271,7 @@ var quizFormHandler = function (event) {
 var loadScores = function () {
   highScores = localStorage.getItem("high-scores", highScores);
   if (!highScores) {
-    highScores = [];
+    // highScores = [];
     return false;
   }
   highScores = JSON.parse(highScores);
@@ -321,7 +324,7 @@ var showHighScores = function () {
 };
 
 var clearScores = function () {
-  highScores = [];
+//   highScores = [];
   // Store empty array in local storage
   localStorage.setItem("high-scores", JSON.stringify(highScores));
   // Update view
