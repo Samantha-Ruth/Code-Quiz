@@ -50,7 +50,6 @@ var timerEl = document.querySelector("#countdown");
 var viewHighScoresButtonEl = document.querySelector("#score-button");
 var highScoreHeaderEl = document.createElement("div");
 var highScores = [];
-var persist;
 
 // CREATE BUTTONS FOR ANSWERS
 var quizOpt1Button = document.createElement("button");
@@ -241,42 +240,42 @@ var endQuiz = function () {
   enterHighScoresFormEl.addEventListener("submit", quizFormHandler);
 };
 
-var quizFormHandler = function (event) {
-  // Prevent page refresh
-  event.preventDefault();
-
-  // Load initials
-  var quizInitials = document.querySelector("input[name='initials']").value;
-  if (quizInitials === "") return false;
-
-  // Make score object
-  var thisScore = {
-    score: score,
-    initials: quizInitials,
-  };
-
-  // Store score object in array of high scores
-  highScores.push(thisScore);
-  var stringified = JSON.stringify(highScores);
-  console.log(stringified);
-
+// Form to submit initials and add to high score list
+var quizFormHandler = function(event) {
+    // Prevent page refresh
+    event.preventDefault();
+  
+    // Load initials
+    var quizInitials = document.querySelector("input[name='initials']").value;
+    if (quizInitials === "")
+        return false;
+  
+    // Make score object
+    var thisScore = {
+        score: score,
+        initials: quizInitials
+    };
+  
+    // Store score object in array of high scores
+    highScores.push(thisScore);
     // Store high scores in local storage to persist through page reloads
-    localStorage.setItem("high-scores", stringified);
-
-  // Update and advance to high scores display
-  showHighScores();
-};
+    localStorage.setItem("high-scores",JSON.stringify(highScores));
+  
+    // Update and advance to high scores display
+    showHighScores();
+  }
+  
 
 // Load high scores from local persistent storage
-var loadScores = function () {
-  highScores = localStorage.getItem("high-scores", highScores);
-  if (!highScores) {
-    // highScores = [];
-    return false;
+var loadScores = function() {
+    highScores = localStorage.getItem("high-scores",highScores);
+    if (!highScores) {
+        highScores = [];
+        return false;
+    }
+    highScores = JSON.parse(highScores);
   }
-  highScores = JSON.parse(highScores);
-  console.log(highScores);
-};
+
 // showHighScores formats the view of the high scores
 var showHighScores = function () {
   loadScores();
